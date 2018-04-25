@@ -14,9 +14,6 @@ titles = all_items.find_all('h4', {'class': 'card-title'})
 prices = all_items.find_all('p', {'class': 'itemprice'})
 rarity = all_items.find_all('div', {'class':'splash-card'})
 
-for r in rarity:
-    print(r['class'][2])
-
 for t in zip(titles, prices, map(lambda r: r['class'][2], rarity)):
     print('Item: {}\nPrice: {}\nRarity: {}\n'.format(
         t[0].text.strip(), 
