@@ -62,4 +62,6 @@ for t in zip(html_titles, html_prices, map(lambda r: r['class'][2], html_raritie
 
 print("Scraped item data. {} items found.".format(len(all_items)))
 
+# vim: fdm=marker:
+
 # }}}1
