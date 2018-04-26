@@ -40,27 +40,36 @@ def rarity_str_to_rarity(text):
 
 # {{{1 Main
 
-p = requests.get('https://fnbr.co')
-soup = BeautifulSoup(p.text, 'html.parser')
+# TODO Use fnbr.co API when it's available.
 
-heading = soup.find(lambda e: e.name == 'h2' and e.text == 'All Items')
-html_all_items = heading.find_next_sibling()
+def main():
+    p = requests.get('https://fnbr.co')
+    soup = BeautifulSoup(p.text, 'html.parser')
 
-html_titles = html_all_items.find_all('h4', {'class': 'card-title'})
-html_prices = html_all_items.find_all('p', {'class': 'itemprice'})
-html_rarities = html_all_items.find_all('div', {'class':'splash-card'})
+    heading = soup.find(lambda e: e.name == 'h2' and e.text == 'All Items')
+    html_all_items = heading.find_next_sibling()
 
-# Used with the Item class.
-all_items = []
+    html_titles = html_all_items.find_all('h4', {'class': 'card-title'})
+    html_prices = html_all_items.find_all('p', {'class': 'itemprice'})
+    html_rarities = html_all_items.find_all('div', {'class':'splash-card'})
 
-for t in zip(html_titles, html_prices, map(lambda r: r['class'][2], html_rarities)):
-    all_items.append(Item(
-        t[0].text.strip(), 
-        t[1].text.strip(),
-        t[2]
-    ))
+    # Used with the Item class.
+    all_items = []
 
-print("Scraped item data. {} items found.".format(len(all_items)))
+    for t in zip(html_titles, html_prices, map(lambda r: r['class'][2], html_rarities)):
+        all_items.append(Item(
+            t[0].text.strip(), 
+            t[1].text.strip(),
+            t[2]
+        ))
+
+    print("Scraped item data. {} items found.".format(len(all_items)))
+
+# {{{1 Runtime
+
+# TODO Support arguments
+
+main()
 
 # }}}1
 
